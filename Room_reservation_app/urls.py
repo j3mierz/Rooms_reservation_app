@@ -22,6 +22,7 @@ from myapp import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('home/', views.HomePage.as_view(), name='home'),
-    path('add_room/', views.AddRoom.as_view(), name='add_room'),
-    path('edit_room/<int:pk>/', views.EditRoom.as_view(), name='edit_room'),
+    path('home/add_room/', views.AddRoom.as_view(), name='add_room'),
+    path('home/edit_room/<int:pk>/', views.EditRoom.as_view(), name='edit_room'),
+    path('home/delete_room/<int:pk>/', views.DeleteRoom.as_view(), name='delete_room'),
 ]

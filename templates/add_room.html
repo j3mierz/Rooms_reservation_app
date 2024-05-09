@@ -12,7 +12,7 @@
     <input type="text" name="name" id="name" placeholder="name" value="{{ room.name }}">
     <input type="number" name="seats" id="seats" placeholder="number of seats" value="{{ room.seats }}">
     <input type="checkbox" name="projector" id="name"
-    {% if room.projector == True %}
+    {% if room.projector %}
      checked
     {% endif %}>projector
     <input type="submit">

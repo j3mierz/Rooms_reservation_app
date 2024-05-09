@@ -38,10 +38,15 @@ class EditRoom(View):
         name = request.POST.get('name')
         seats = request.POST.get('seats')
         projector = request.POST.get('projector') == 'on'
-        if request.POST.get('projector') == "on":
-            projector = True
         room.name = name
         room.seats = seats
         room.projector = projector
         room.save()
         return redirect('home')
+
+class DeleteRoom(View):
+    def get(self, request, pk):
+        Rooms.objects.filter(id=pk).delete()
+        return redirect('home')
+
+
