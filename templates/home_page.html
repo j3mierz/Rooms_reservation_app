@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        h1, p {
+            display: block;
+            text-align: center;
+            border: 10px darkorange;
+           
+        }
+        
+    </style>
+</head>
+<body>
+<a href="http://localhost:8000/add_room/">add new room</a>
+{% for room in rooms %}
+    <h1>{{ room.name }}</h1>
+    <p>number of seats :{{ room.seats }}</p>
+    <p>projecotr?:{{ room.projector }}</p>
+{% endfor %}
+
+
+</body>
+</html>
