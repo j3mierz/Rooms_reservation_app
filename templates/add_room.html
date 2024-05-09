@@ -1,0 +1,18 @@
+<style>
+    form {
+         display: block;
+            text-align: center;
+            border: 10px darkorange;
+            padding: 80px;
+    }
+</style>
+
+<form method="post">
+    {% csrf_token %}
+    <input type="text" name="name" id="name" placeholder="name">
+    <input type="number" name="seats" id="seats" placeholder="number of seats">
+    <input type="checkbox" name="projector" id="name">projector
+    <input type="submit">
+    
+
+</form>
