@@ -10,8 +10,15 @@
         h1, p {
             display: block;
             text-align: center;
-            border: 10px darkorange;
+            color: #4c67d2;
+            font-weight: 900;
            
+        }
+        a {
+            display: block;
+            text-align: center;
+            color: #ff0000;
+            font-weight: 900;
         }
         
     </style>
@@ -20,8 +27,9 @@
 <a href="http://localhost:8000/add_room/">add new room</a>
 {% for room in rooms %}
     <h1>{{ room.name }}</h1>
-    <p>number of seats :{{ room.seats }}</p>
-    <p>projecotr?:{{ room.projector }}</p>
+    <p>number of seats: {{ room.seats }}</p>
+    <p>projector?: {{ room.projector }}</p>
+    <a href="http://localhost:8000/edit_room/{{ room.id }}">edit room {{ room.name }}</a>
 {% endfor %}
 
 

@@ -9,9 +9,12 @@
 
 <form method="post">
     {% csrf_token %}
-    <input type="text" name="name" id="name" placeholder="name">
-    <input type="number" name="seats" id="seats" placeholder="number of seats">
-    <input type="checkbox" name="projector" id="name">projector
+    <input type="text" name="name" id="name" placeholder="name" value="{{ room.name }}">
+    <input type="number" name="seats" id="seats" placeholder="number of seats" value="{{ room.seats }}">
+    <input type="checkbox" name="projector" id="name"
+    {% if room.projector == True %}
+     checked
+    {% endif %}>projector
     <input type="submit">
     
 
