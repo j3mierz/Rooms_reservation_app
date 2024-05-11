@@ -19,7 +19,7 @@ class AddRoom(View):
         return render(request, 'add_room.html')
 
     def post(self, request):
-        name = request.POST.get('name') # TRY AND EXCEPT ON NAME BECAUSE NAME IS UNIQUE NOW
+        name = request.POST.get('name')  # TRY AND EXCEPT ON NAME BECAUSE NAME IS UNIQUE NOW
         seats = request.POST.get('seats')
         projector = request.POST.get('projector') == 'on'
         Rooms.objects.create(name=name, seats=seats, projector=projector)
@@ -33,7 +33,6 @@ class EditRoom(View):
         return render(request, 'add_room.html', {'room': room})
 
     def post(self, request, pk):
-
         room = Rooms.objects.get(pk=pk)
         name = request.POST.get('name')
         seats = request.POST.get('seats')
@@ -44,9 +43,17 @@ class EditRoom(View):
         room.save()
         return redirect('home')
 
+
 class DeleteRoom(View):
     def get(self, request, pk):
         Rooms.objects.filter(id=pk).delete()
         return redirect('home')
 
 
+class RoomsView(View):
+    def get(self, request, pk):
+        room = Rooms.objects.get(pk=pk)
+        return render(request, 'room_view.html', {'room': room})
+
+    def post(self, request, pk):
+        pass

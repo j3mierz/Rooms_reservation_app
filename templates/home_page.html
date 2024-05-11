@@ -49,7 +49,7 @@
 </tr>
 {% for room in rooms %}
     <tr>
-    <td>{{ room.name }}</td>
+        <td><a href="room/{{ room.id }}/">{{ room.name }}</a></td>
         <td> dont know</td>
         
         <td><a href="edit_room/{{ room.id }}">edit room {{ room.name }}</a></td>

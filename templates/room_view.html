@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        p, h1 {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<h1>{{ room.name }}</h1>
+<h1>occiped</h1>
+<p>{{ room.seats }} seats</p>
+{% if room.projector %}
+<p>has projector</p>
+    {% else %}
+    <p>No projector</p>
+{% endif %}
+<p>daty</p>
+</body>
+</html>
