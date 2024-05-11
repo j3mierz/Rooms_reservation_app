@@ -19,7 +19,7 @@ class AddRoom(View):
         return render(request, 'add_room.html')
 
     def post(self, request):
-        name = request.POST.get('name')
+        name = request.POST.get('name') # TRY AND EXCEPT ON NAME BECAUSE NAME IS UNIQUE NOW
         seats = request.POST.get('seats')
         projector = request.POST.get('projector') == 'on'
         Rooms.objects.create(name=name, seats=seats, projector=projector)

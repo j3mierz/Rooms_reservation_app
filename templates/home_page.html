@@ -5,7 +5,8 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <meta name="author" content="John Doe">
+    <title>Rooms</title>
     <style>
         h1, p {
             color: #4c67d2;
@@ -13,35 +14,43 @@
            
         }
         a {
-            color: #ff0000;
+            color: rgba(0, 42, 255, 0.34);
             font-weight: 900;
             padding: 10px;
         }
         
             table, th, td {
-        border: 1px solid black;
+                border: 1px solid black;
                 margin-left: auto;
-  margin-right: auto;
+                margin-right: auto;
+                border-radius: 15px;
+                background: rgba(19, 122, 86, 0.46);
+                padding: 5px;
+                width: 50px;
+                height: 50px; 
         }
+        #bg{
+    background-size: 1800px 900px;
+    background-repeat: no-repeat;
+    background-position: top;
+    background-attachment: fixed;
+}
     </style>
+    
 </head>
 <body>
 <a href="add_room/">add new room</a>
 <table>
 <tr>
     <th>room name</th>
-    <th>ile siedzien</th>
-    <th>projektor?</th>
+    <th>occupied today?</th>
     <th> edit</th>
     <th> DELETE</th>
 </tr>
 {% for room in rooms %}
     <tr>
     <td>{{ room.name }}</td>
-        
-    <td>{{ room.seats }}</td>
-        
-     <td>{{ room.projector }}</td>
+        <td> dont know</td>
         
         <td><a href="edit_room/{{ room.id }}">edit room {{ room.name }}</a></td>
         
