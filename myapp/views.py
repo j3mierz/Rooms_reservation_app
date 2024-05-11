@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views import View
 
-from myapp.models import Rooms
+from myapp.models import Rooms, RoomsReservation
 
 
 # Create your views here.
@@ -53,7 +53,17 @@ class DeleteRoom(View):
 class RoomsView(View):
     def get(self, request, pk):
         room = Rooms.objects.get(pk=pk)
-        return render(request, 'room_view.html', {'room': room})
+        try:
+            reservation = RoomsReservation.objects.filter(room=room)
+        except:
+            reservation = ""
+            pass
+        return render(request, 'room_view.html', {'room': room, 'reservations': reservation})
 
     def post(self, request, pk):
-        pass
+        date = request.POST.get('date')
+        room = Rooms.objects.get(pk=pk)
+        RoomsReservation.objects.create(room=room, date=date, comment="na razie nie ma commenta")
+        return redirect(f'/home/room/{room.id}')
+
+
