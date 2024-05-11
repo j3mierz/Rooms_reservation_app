@@ -19,13 +19,14 @@
     {% else %}
     <p>No projector</p>
 {% endif %}
-<p>occupied: {% for reservation in reservations %} {{ reservation.date }} {% endfor %} </p>
+<p>occupied: {% for reservation in reservations %} {{ reservation.date }}; {% endfor %} </p>
  <p><a href="/home/edit_room/{{ room.id }}">edit room {{ room.name }}</a></p>
 <p><a href="/home/delete_room/{{ room.id }}">X</a></p>
 <form method="post">
     {%  csrf_token %}
     <input type="date" name="date" id="date">
     <input type="submit">
+    {{ message }}
     </form>
 </body>
 </html>

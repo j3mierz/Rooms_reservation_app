@@ -1,3 +1,6 @@
+from datetime import datetime, date
+
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.views import View
 
@@ -53,17 +56,21 @@ class DeleteRoom(View):
 class RoomsView(View):
     def get(self, request, pk):
         room = Rooms.objects.get(pk=pk)
-        try:
-            reservation = RoomsReservation.objects.filter(room=room)
-        except:
-            reservation = ""
-            pass
+        reservation = RoomsReservation.objects.filter(room=room)
         return render(request, 'room_view.html', {'room': room, 'reservations': reservation})
 
     def post(self, request, pk):
-        date = request.POST.get('date')
+        reservation_date = request.POST.get('date')
         room = Rooms.objects.get(pk=pk)
-        RoomsReservation.objects.create(room=room, date=date, comment="na razie nie ma commenta")
+        if str(date.today()) > reservation_date:
+            reservations = RoomsReservation.objects.filter(room=room)
+            message = "date must be in future"
+            return render(request, 'room_view.html', {'room': room, 'reservations': reservations, 'message': message})
+        if len(RoomsReservation.objects.filter(room=room, date=reservation_date)) > 0:
+            reservations = RoomsReservation.objects.filter(room=room)
+            message = "date already taken"
+            return render(request, 'room_view.html', {'room': room, 'reservations': reservations, 'message': message})
+        RoomsReservation.objects.create(room=room, date=reservation_date, comment="na razie nie ma commenta")
         return redirect(f'/home/room/{room.id}')
 
 
