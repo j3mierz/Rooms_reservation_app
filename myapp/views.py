@@ -24,12 +24,16 @@ class HomePage(View):
 
 
     def post(self, request):
+
         search = request.POST.get('search')
         rooms_search = Rooms.objects.filter(name__iregex=f'{search}')
         if len(rooms_search) == 0:
             message = "no such room"
             return render(request, 'home_page.html', {'message': message,
                                                       'today': date.today()})
+        for room in rooms_search:
+            reservation_dates = [i.date for i in RoomsReservation.objects.filter(room=room.id)]
+            room.reserved = date.today() in reservation_dates
 
         return render(request, 'home_page.html', {'rooms': rooms_search,
                                                   'today': date.today()})
