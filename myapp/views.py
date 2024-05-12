@@ -25,7 +25,7 @@ class HomePage(View):
 
     def post(self, request):
         search = request.POST.get('search')
-        rooms_search = Rooms.objects.filter(name=search)
+        rooms_search = Rooms.objects.filter(name__iregex=f'{search}')
         if len(rooms_search) == 0:
             message = "no such room"
             return render(request, 'home_page.html', {'message': message,
