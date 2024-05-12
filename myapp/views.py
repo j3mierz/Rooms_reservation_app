@@ -12,6 +12,10 @@ from myapp.models import Rooms, RoomsReservation
 class HomePage(View):
     def get(self, request):
         rooms = Rooms.objects.all()
+        if len(rooms) == 0:
+            message = "No rooms in DB"
+            return render(request, 'home_page.html', {'message': message,
+                                                      'today': date.today()})
         for room in rooms:
             reservation_dates = [i.date for i in RoomsReservation.objects.filter(room=room.id)]
             room.reserved = date.today() in reservation_dates
@@ -20,8 +24,15 @@ class HomePage(View):
 
 
     def post(self, request):
-        pass
+        search = request.POST.get('search')
+        rooms_search = Rooms.objects.filter(name=search)
+        if len(rooms_search) == 0:
+            message = "no such room"
+            return render(request, 'home_page.html', {'message': message,
+                                                      'today': date.today()})
 
+        return render(request, 'home_page.html', {'rooms': rooms_search,
+                                                  'today': date.today()})
 
 class AddRoom(View):
     def get(self, request):
@@ -89,7 +100,7 @@ class RoomsView(View):
         if len(RoomsReservation.objects.filter(room=room, date=date.today())) == 1:
             today_occupied = "occupied"
         else:
-            today_occupied = "unoccupied"
+            today_occupied = "Free"
         return render(request, 'room_view.html', {'room': room,
                                                   'reservations': reservations,
                                                   'today_occupied': today_occupied})

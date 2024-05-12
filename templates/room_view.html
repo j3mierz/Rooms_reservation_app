@@ -5,12 +5,35 @@
     <title>Title</title>
     <style>
         p, h1 {
+
+            background-color: rgb(76, 103, 210);
+        border-radius: 5px;
+            width: 50%;
+            height: auto;
             text-align: center;
+            margin: auto;
+            padding: 20px;
+        }
+        form, input {
+            text-align: center;
+            font-size: 20px;
+            padding: 20px;
+        }
+ .button1 {background-color: #A1EEBD;
+        border-radius: 5px;
+        border: 1px solid black;
+             text-align: center;
+            padding: 20px;
+            width: auto;
+            height: auto;
+        }
+        .button1:hover { background: #383;
+        transition-duration: 0.4s;
         }
     </style>
 </head>
 <body>
-
+<a href="/home"><button class="button1">HOME</button></a>
 <h1>{{ room.name }}</h1>
 <h1>Today {{ today_occupied }}</h1>
 <p>{{ room.seats }} seats</p>
@@ -22,11 +45,12 @@
 <p>occupied: {% for reservation in reservations %} {{ reservation.date }}; {% endfor %} </p>
  <p><a href="/home/edit_room/{{ room.id }}">edit room {{ room.name }}</a></p>
 <p><a href="/home/delete_room/{{ room.id }}">X</a></p>
-<form method="post">
+
+<form method="post"> reserve room
     {%  csrf_token %}
     <input type="date" name="date" id="date">
-    <input type="submit">
-    {{ message }}
+    <input type="submit"><br>
+    <p>{{ message }}</p>
     </form>
 </body>
 </html>
