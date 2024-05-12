@@ -14,17 +14,17 @@
            
         }
         a {
-            color: rgba(0, 42, 255, 0.34);
+            color: #51829B;
             font-weight: 900;
             padding: 10px;
         }
         
-            table, th, td {
+            table, th, button {
                 border: 1px solid black;
                 margin-left: auto;
                 margin-right: auto;
-                border-radius: 15px;
-                background: rgba(19, 122, 86, 0.46);
+                border-radius: 5px;
+                background: #7BD3EA;
                 padding: 5px;
                 width: 50px;
                 height: 50px; 
@@ -35,11 +35,27 @@
     background-position: top;
     background-attachment: fixed;
 }
+        th {
+            background: #F6F7C4;
+        }
+        .button1 {background-color: #A1EEBD;
+        border-radius: 5px;
+        border: 1px solid black;}
+        .button1:hover { background: #383;
+        transition-duration: 0.4s;}
+        
+        .positive {background-color: rgba(248, 9, 9, 0.89);
+        border-radius: 5px;
+        border: 1px solid black;}
+        
+        .negative {background-color: #55ff00;
+        border-radius: 5px;
+        border: 1px solid black;}
     </style>
     
 </head>
 <body>
-<a href="add_room/">add new room</a>
+<a href="add_room/"><button class="button1">add room</button></a>
 <table>
 <tr>
     <th>room name</th>
@@ -48,13 +64,17 @@
     <th> DELETE</th>
 </tr>
 {% for room in rooms %}
-    <tr>
-        <td><a href="room/{{ room.id }}/">{{ room.name }}</a></td>
-        <td> dont know</td>
+       <tr>
+      
+        <td><a href="room/{{ room.id }}/"><button class="button1">{{ room.name }}</button></a></td>
+         {% if room.reserved %}
+            <td class="positive">reserved</td>
+           {% else %}
+           <td class="negative">Free</td>
+          {% endif %} 
+        <td><a href="edit_room/{{ room.id }}"><button class="button1">edit room</button></a></td>
         
-        <td><a href="edit_room/{{ room.id }}">edit room {{ room.name }}</a></td>
-        
-     <td><a href="delete_room/{{ room.id }}">X</a></td>
+     <td><a href="delete_room/{{ room.id }}"><button class="button1">X</button></a></td>
     </tr>
 {% endfor %}
 </table>

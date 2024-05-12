@@ -11,7 +11,13 @@ from myapp.models import Rooms, RoomsReservation
 
 class HomePage(View):
     def get(self, request):
-        return render(request, 'home_page.html', {'rooms': Rooms.objects.all()})
+        rooms = Rooms.objects.all()
+        for room in rooms:
+            reservation_dates = [i.date for i in RoomsReservation.objects.filter(room=room.id)]
+            room.reserved = date.today() in reservation_dates
+        return render(request, 'home_page.html', {'rooms': rooms,
+                                                  'today': date.today()})
+
 
     def post(self, request):
         pass
@@ -44,7 +50,7 @@ class EditRoom(View):
         room.seats = seats
         room.projector = projector
         room.save()
-        return redirect('home')
+        return redirect(f'/home/room/{pk}')
 
 
 class DeleteRoom(View):
@@ -56,21 +62,37 @@ class DeleteRoom(View):
 class RoomsView(View):
     def get(self, request, pk):
         room = Rooms.objects.get(pk=pk)
-        reservation = RoomsReservation.objects.filter(room=room)
-        return render(request, 'room_view.html', {'room': room, 'reservations': reservation})
+        reservations = RoomsReservation.objects.filter(room=room)
+        if len(RoomsReservation.objects.filter(room=room, date=date.today())) == 1:
+            today_occupied = "occupied"
+        else:
+            today_occupied = "unoccupied"
+        return render(request, 'room_view.html', {'room': room,
+                                                  'reservations': reservations,
+                                                  'today_occupied': today_occupied})
 
     def post(self, request, pk):
+
+        room = Rooms.objects.get(pk=pk)
+        reservations = RoomsReservation.objects.filter(room=room)
+        if len(RoomsReservation.objects.filter(room=room, date=date.today())) == 1:
+            today_occupied = "occupied"
+        else:
+            today_occupied = "unoccupied"
+
         reservation_date = request.POST.get('date')
         room = Rooms.objects.get(pk=pk)
         if str(date.today()) > reservation_date:
             reservations = RoomsReservation.objects.filter(room=room)
             message = "date must be in future"
-            return render(request, 'room_view.html', {'room': room, 'reservations': reservations, 'message': message})
+            return render(request, 'room_view.html', {'room': room, 'reservations': reservations,
+                                                      'message': message,
+                                                      'today_occupied': today_occupied})
         if len(RoomsReservation.objects.filter(room=room, date=reservation_date)) > 0:
             reservations = RoomsReservation.objects.filter(room=room)
             message = "date already taken"
-            return render(request, 'room_view.html', {'room': room, 'reservations': reservations, 'message': message})
+            return render(request, 'room_view.html', {'room': room, 'reservations': reservations,
+                                                      'message': message,
+                                                      'today_occupied': today_occupied})
         RoomsReservation.objects.create(room=room, date=reservation_date, comment="na razie nie ma commenta")
         return redirect(f'/home/room/{room.id}')
-
-
