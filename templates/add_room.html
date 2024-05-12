@@ -10,11 +10,12 @@
 <form method="post">
     {% csrf_token %}
     <input type="text" name="name" id="name" placeholder="name" value="{{ room.name }}">
-    <input type="number" name="seats" id="seats" placeholder="number of seats" value="{{ room.seats }}">
+    <input type="number" name="seats" id="seats" placeholder="number of seats" value="{{ room.seats }}" required>
     <input type="checkbox" name="projector" id="name"
     {% if room.projector %}
      checked
     {% endif %}>projector
+    <h1>{{ error }}</h1>
     <input type="submit">
     
 

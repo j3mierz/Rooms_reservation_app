@@ -11,46 +11,61 @@
         h1, p {
             color: #4c67d2;
             font-weight: 900;
-           
+
         }
         a {
             color: #51829B;
             font-weight: 900;
-            padding: 10px;
+            padding: 20px;
+
         }
         
             table, th, button {
+                
                 border: 1px solid black;
                 margin-left: auto;
                 margin-right: auto;
                 border-radius: 5px;
                 background: #7BD3EA;
-                padding: 5px;
-                width: 50px;
-                height: 50px; 
+                padding: 20px;
+                
+                  text-align: center;
         }
         #bg{
     background-size: 1800px 900px;
     background-repeat: no-repeat;
     background-position: top;
     background-attachment: fixed;
+              text-align: center;
 }
         th {
             background: #F6F7C4;
+              
         }
         .button1 {background-color: #A1EEBD;
         border-radius: 5px;
-        border: 1px solid black;}
+        border: 1px solid black;
+             text-align: center;
+            padding: 20px;
+            width: auto;
+            height: auto;
+        }
         .button1:hover { background: #383;
-        transition-duration: 0.4s;}
-        
+        transition-duration: 0.4s;
+        }
+
         .positive {background-color: rgba(248, 9, 9, 0.89);
         border-radius: 5px;
-        border: 1px solid black;}
-        
+        border: 1px solid black;
+         text-align: center;
+        }
+
         .negative {background-color: #55ff00;
         border-radius: 5px;
-        border: 1px solid black;}
+        border: 1px solid black;
+        text-align: center;
+        }
+      
     </style>
     
 </head>
@@ -65,13 +80,13 @@
 </tr>
 {% for room in rooms %}
        <tr>
-      
+
         <td><a href="room/{{ room.id }}/"><button class="button1">{{ room.name }}</button></a></td>
          {% if room.reserved %}
             <td class="positive">reserved</td>
            {% else %}
            <td class="negative">Free</td>
-          {% endif %} 
+          {% endif %}
         <td><a href="edit_room/{{ room.id }}"><button class="button1">edit room</button></a></td>
         
      <td><a href="delete_room/{{ room.id }}"><button class="button1">X</button></a></td>

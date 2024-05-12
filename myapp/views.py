@@ -28,9 +28,21 @@ class AddRoom(View):
         return render(request, 'add_room.html')
 
     def post(self, request):
-        name = request.POST.get('name')  # TRY AND EXCEPT ON NAME BECAUSE NAME IS UNIQUE NOW
+        error = ""
+        name = request.POST.get('name')
         seats = request.POST.get('seats')
         projector = request.POST.get('projector') == 'on'
+        if len(name) not in range(1, 50):
+            error += " Name must be between 1 and 50 characters, "
+        for i in Rooms.objects.all():
+            if i.name == name:
+                error += " Room of this name already exists, "
+        if int(seats) < 0:
+            error += "seats number must be not negative"
+
+        if len(error) > 0:
+            return render(request, 'add_room.html', {'error': error})
+
         Rooms.objects.create(name=name, seats=seats, projector=projector)
         return redirect('home')
 
@@ -42,10 +54,21 @@ class EditRoom(View):
         return render(request, 'add_room.html', {'room': room})
 
     def post(self, request, pk):
+        error = ""
         room = Rooms.objects.get(pk=pk)
         name = request.POST.get('name')
         seats = request.POST.get('seats')
         projector = request.POST.get('projector') == 'on'
+        if len(name) not in range(1, 50):
+            error += " Name must be between 1 and 50 characters, "
+        for i in Rooms.objects.all():
+            if i.name == name and name != room.name:
+                error += " Room of this name already exists, "
+        if int(seats) < 0:
+            error += "seats number must be not negative"
+
+        if len(error) > 0:
+            return render(request, 'add_room.html', {'error': error})
         room.name = name
         room.seats = seats
         room.projector = projector
